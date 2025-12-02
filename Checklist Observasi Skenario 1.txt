@@ -32,7 +32,7 @@ Checklist Observasi Skenario 1
 
 6. Kenaikan SEQ antar segmen data
    Field: tcp.seq
-   Hasil Observasi: SEQ meningkat sesuai ukuran payload data (contoh : 			    1 -> 96)
+   Hasil Observasi: SEQ meningkat sesuai ukuran payload data (contoh : 1 -> 96)
    Checklist: ✔
    Deskripsi: Data diterima berurutan oleh server.
 
@@ -72,5 +72,6 @@ PERTANYAAN
 	- ACK bertambah secara berurutan
 	- RTT stabil.
 4. Pengirim akan retransmit segmen yang hilang (TCP tetap menjamin data sampai lengkap).
+
 
 
