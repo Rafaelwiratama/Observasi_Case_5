@@ -1,0 +1,68 @@
+Checklist Observasi Skenario 2
+
+1. Persentase loss yang disimulasikan
+   Field: —
+   Hasil Observasi: 1% loss
+   Checklist: ✔
+   Analisis: Loss disengaja untuk test recovery TCP
+
+2. Jumlah retransmission
+   Field: tcp.analysis.retransmission
+   Hasil Observasi: Banyak paket bertanda "TCP Fast Retransmission" muncul
+   Checklist: ✔
+   Analisis: Paket dikirim ulang karena tidak mendapat ACK / hilang.
+
+3. Jumlah dupACK
+   Field: tcp.analysis.duplicate_ack
+   Hasil Observasi: Banyak paket bertanda "TCP Dup ACK" terdeteksi
+   Checklist: ✔
+   Analisis: DupACK memicu mekanisme fast retransmit
+
+4. RTT sebelum dan sesudah loss
+   Field: tcp.analysis.ack_rtt
+   Hasil Observasi: RTT meningkat setelah terjadi loss
+   Checklist: ✔
+   Analisis: Recovery dari loss membuat delay bertambah
+
+5. Fast retransmit terdeteksi
+   Field: tcp.analysis.fast_retransmission
+   Hasil Observasi: Muncul paket dengan label "Fast Retransmission"
+   Checklist: ✔
+   Analisis: Retransmit terjadi sebelum timeout berarti performa lebih baik
+
+6. Timeout retransmission
+   Field: frame.time_relative
+   Hasil Observasi: Retransmit juga terjadi setelah jeda Waktu cukup panjang
+   Checklist: ✔
+   Analisis: Timeout terjadi jika belum cukup DupACK untuk fast retransmit.
+
+7. Throughput rata-rata
+   Field: hasil curl -w
+   Hasil Observasi: Throughput turun dibanding scenario 1
+   Checklist: ✔
+   Analisis: Loss menyebabkan penurunan kecepatan pengiriman data
+
+8. Lama transfer total
+   Field: hasil curl -w
+   Hasil Observasi: Durasi transfer meningkat
+   Checklist: ✔
+   Analisis: Recovery loss membuat Waktu pengiriman lebih lama
+
+9. Pola cwnd (perkiraan)
+   Field: tcp.analysis.bytes_in_flight
+   Hasil Observasi: Bytes in flight turun saat loss terdeteksi
+   Checklist: ✔
+   Analisis: cwnd mengecil sebagai respon congestion control.
+
+PERTANYAAN 
+1. TCP mendeteksi hilangnya segmen melalui duplicate ACK atau timeout.
+
+2. Perbedaan :
+	- Fast retransmit : retransmission dipicu oleh minimal 3 duplicate ACK sehingga lebih cepat
+	- Timeout retransmission : retransmission terjadi setelah menunggu timer habis sehingga lebih lambat
+
+3. Ketika loss terdeteksi, TCP mengurangi congestion window (cwnd) sehingga laju pengiriman menurun.
+
+4. 	- Lost segment dikirim ulang (retransmission)
+	- Data tetap diterima lengkap dan berurutan
+Sehingga TCP tetap menjamin reliability.

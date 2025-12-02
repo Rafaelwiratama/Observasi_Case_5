@@ -1,0 +1,76 @@
+Checklist Observasi Skenario 1
+
+1. IP sumber dan tujuan
+   Field: ip.src, ip.dst
+   Hasil Observasi: client 192.168.200.100 -> server 192.168.200.101
+   Checklist: ✔
+   Deskripsi: Koneksi terjadi antara klien dan server (pengirim dan penerima)
+
+2. Proses handshake (3 paket awal)
+   Field: tcp.flags.syn, tcp.flags.ack
+   Hasil Observasi: Terlihat proses SYN -> SYN/ACK -> ACK
+   Checklist: ✔
+   Deskripsi: 3-way handshake berhasil
+
+3. Sequence Number awal klien
+   Field: tcp.seq (SYN)
+   Hasil Observasi: Sequence number awal klien = 0 (relative)
+   Checklist: ✔
+   Deskripsi: Byte awal dikirim klien
+
+4. Sequence Number awal server
+   Field: tcp.seq (SYN-ACK)
+   Hasil Observasi: Sequence number awal server = 0 
+   Checklist: ✔
+   Deskripsi: Byte awal sisi server saat respon handshake
+
+5. ACK setelah handshake
+   Field: tcp.ack
+   Hasil Observasi: ACK klien = 1 -> Mengkonfirmasi SYN-ACK server
+   Checklist: ✔
+   Deskripsi: Koneksi siap mengirim data.
+
+6. Kenaikan SEQ antar segmen data
+   Field: tcp.seq
+   Hasil Observasi: SEQ meningkat sesuai ukuran payload data (contoh : 			    1 -> 96)
+   Checklist: ✔
+   Deskripsi: Data diterima berurutan oleh server.
+
+7. Pola ACK penerima
+   Field: tcp.ack
+   Hasil Observasi: ACK bertambah secara bertahap mengikuti data yang diterima
+   Checklist: ✔
+   Deskripsi: ACK menandakan data sampai dengan baik
+
+8. RTT rata-rata
+   Field: tcp.analysis.ack_rtt
+   Hasil Observasi: RTT stabil, tidak ada lonjakan besar.
+   Checklist: ✔
+   Deskripsi: Koneksi berjalan lancar
+
+9. Status retransmission
+   Field: tcp.analysis.retransmission
+   Hasil Observasi: Tidak ada/ditemukan retransmission
+   Checklist: ✔
+   Deskripsi: Tidak ada paket yang hilang
+
+10. Pola penutupan koneksi
+    Field: tcp.flags.fin, tcp.flags.ack
+    Hasil Observasi: FIN -> ACK -> FIN -> ACK -> Koneksi tertutup.
+    Checklist: ✔
+    Deskripsi: TCP menutup koneksi dengan 4-way handshake yang benar.
+
+PERTANYAAN
+1. Sequence number untuk menentukan urutan yang dikirim
+   Acknowledgment number untuk mengonfirmasi data yang sudah diterima -> memastikan data sampai lengkap dan berurutan
+
+2. Karena dua hal :
+	- lebih efisien (satu ACK untuk banyak data).
+	- mengurangi beban jaringan (mempercepat dan menstabilkan komunikasi TCP).
+
+3. 	- tidak ada retransmission
+	- ACK bertambah secara berurutan
+	- RTT stabil.
+4. Pengirim akan retransmit segmen yang hilang (TCP tetap menjamin data sampai lengkap).
+
+

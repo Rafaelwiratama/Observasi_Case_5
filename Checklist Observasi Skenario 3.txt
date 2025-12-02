@@ -1,0 +1,61 @@
+Checklist Observasi Skenario 3
+
+Algoritma: TCP CUBIC
+======================================================
+1. RTT rata-rata
+   ✔ RTT stabil → efisien
+2. RTT maksimum
+   ✔ Tidak terlalu tinggi
+3. Throughput (curl)
+   ✔ speed=96,595 B/s
+4. Waktu transfer total
+   ✔ total=51.762489s
+5. Jumlah retransmission
+   ✔ Sedikit retransmission
+6. Jumlah dupACK
+   ✔ Ada namun rendah
+7. Pola cwnd (awal–akhir)
+   ✔ Tumbuh agresif kemudian stabil
+8. Nilai rwnd rata-rata
+   ✔ Window besar → transfer lancar
+9. Stabilitas throughput
+   ✔ Lebih stabil
+10. Efisiensi (Throughput ÷ RTT)
+   ✔ Relatif efisien, namun throughput masih rendah
+
+======================================================
+Algoritma: TCP RENO
+======================================================
+1. RTT rata-rata
+   ✔ RTT rata-rata meningkat saat loss recovery
+2. RTT maksimum
+   ✔ Lebih tinggi dari CUBIC
+3. Throughput (curl)
+   ✔ speed=127,381 B/s (lebih tinggi dari CUBIC)
+4. Waktu transfer total
+   ✔ total=39.252101s (lebih cepat)
+5. Jumlah retransmission
+   ✔ Retransmission lebih banyak dari CUBIC
+6. Jumlah dupACK
+   ✔ Banyak → sensitif terhadap loss
+7. Pola cwnd (awal–akhir)
+   ✔ Kurva sawtooth → naik turun drastis
+8. Nilai rwnd rata-rata
+   ✔ Stabil namun sedikit menurun saat loss
+9. Stabilitas throughput
+   ✔ Cenderung fluktuatif
+10. Efisiensi (Throughput ÷ RTT)
+   ✔ Tidak sebaik CUBIC saat RTT tinggi
+
+PERTANYAAN 
+1. TCP Reno, karena mekanisme AIMD membuat cwnd lebih cepat meningkat pada kondisi jaringan local dengan RTT rendah
+
+2. TCP Reno, karena setiap kenaikan cwnd tergantung pada RTT, semakin tinggi RTT maka pertumbuhan semakin lambat
+
+3. Ya ada, TCP reno lebih sering melakukan multiplicative decrease sehingga menyebabkan lebih banyak retransmission saat terjadi dupACK / loss. TCP Cubic lebih stabil pada kondisi loss moderate sehingga retransmission lebih sedikit.
+
+4.	- TCP Reno ; Naik linear sehingga turun drastis saat loss, sangat sensitive terhadap loss.
+
+	- TCP Cubic ; Kurva kubik sehingga naiknya cepat lalu stabil, loss-tolerant dan lebih agresif recovery
+
+5. TCP Cubic lebih efisien karena perhitungan cwnd tidak bergantung pada RTT sehingga mampu mempertahankan throughput pada delay yang tinggi.
