@@ -12,3 +12,14 @@
 | 8 | Jumlah ACK Klien | Endpoints → TCP | ±9 | ±13 | ±4294 | Banyak data → banyak ACK |
 | 9 | Pola Pertumbuhan SEQ–ACK | tcp.seq / tcp.ack | kecil | sedang | besar | Window membesar (MSS ~1514 B) |
 |10 | Retransmission | tcp.analysis.retransmission | Tidak ada | Tidak ada | Ada (1x) | Reliable, minimal loss |
+
+
+# TUGAS 2 
+| File         | Algoritma | RTT Rata-rata (ms) | Retransmission | Throughput (B/s) | Waktu Transfer (s) | cwnd (bytes)       | Pola cwnd                    | Catatan |
+|-------------|-----------|------------------|----------------|-----------------|-------------------|-------------------|-----------------------------|--------|
+| tes1000.bin | Reno      | 200–400          | 0              | 2487            | 0.402060          | Kecil stabil       | Linear (AIMD)               | Tidak ada loss, transfer sangat cepat |
+| tes1000.bin | Cubic     | 200–400          | 0              | 2454            | 0.407437          | Kecil stabil       | Kurva Cubic (agresif)       | Mirip Reno pada ukuran kecil |
+| tes10000.bin| Reno      | 200–420          | 0              | 23168           | 0.431614          | Bertahap naik      | Linear (AIMD)               | Stabil tanpa retransmission |
+| tes10000.bin| Cubic     | 200–420          | 0              | 23210           | 0.430831          | Lebih agresif naik | Kurva Cubic                 | Throughput sedikit lebih tinggi dari Reno |
+| tes5M.bin   | Reno      | 200–440          | Banyak (Fast Retr) | 105842      | 47.240132         | Turun saat loss    | AIMD – sering recovery     | TCP congestion terlihat, performa turun |
+| tes5M.bin   | Cubic     | 200–420          | Banyak (Fast Retr) | 98927       | 50.541921         | Tetap agresif      | Pemulihan lebih cepat       | Transfer lebih lambat dari Reno pada kondisi loss |
